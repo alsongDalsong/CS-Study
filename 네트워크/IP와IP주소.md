@@ -205,7 +205,7 @@ IP 주소와 서브넷 마스크를 함께 표기하는 방법은, IP 주소와 
 - IP주소/서브넷 마스크
     - `127.175.170.102/26`
  
-# IP 주소 할당을 위한 DHCP
+# IP 주소 할당을 위한 DHCP(Dynamic Host Configuration Protocol)
 
 DHCP는 동적으로 IP 주소를 할당받는 과정에서 클라이언트와 DHCP 서버간 메시지를 주고받기 위해 사용되는 프로토콜이다.
 
