@@ -77,6 +77,29 @@ high.async {
 
     print("High priority task is now running")
 }
+결과 : Low -> High 런타임 에러(경고)
+
+var a = 0
+// Low priority task
+for _ in 0..<6 {
+    Task(priority: .low) {
+        a += 1
+        print("Running long, lowest priority task")
+        try? await Task.sleep(nanoseconds: 5 * 1_000_000_000)
+        print("Low priority task finished")
+    }
+}
+    
+// High priority task
+for _ in 0..<6 {
+    Task(priority: .high) {
+        a += 1
+        try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)
+            
+        print("High priority task is now running")
+    }
+}
+결과 : 우선순위 순차적으로 Task 수행
 
 ```
 <img width="1026" alt="image" src="https://github.com/user-attachments/assets/aa054d9a-b1d5-4746-88ee-e2dd70a918f6" />
