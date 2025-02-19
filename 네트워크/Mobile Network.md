@@ -38,7 +38,7 @@ Mobile Network(Wireless Network) 라고도 함 .
 
 ![image](https://github.com/user-attachments/assets/cc66bbf0-ea30-4240-91ee-d3ac1a94f271)
 
-무선 네트워크는 크게 Cellular Network(셀룰러 네트워크)와 WiFi로 구분할 수 있습니다.
+**무선 네트워크는 크게 Cellular Network(셀룰러 네트워크)와 WiFi로 구분할 수 있습니다.**
 
 WiFi는주로 실내 환경에서 사용되며, 일반적으로 약 10~30m 정도의 커버리지를 제공합니다.
 
@@ -155,7 +155,7 @@ A는 감지하지 못하므로, B에게 전송을 한다면
 
 B의 입장에서는 C에서 오는 신호와 A에서 오는 신호가 충돌이 발생합니다.
 
-### 감쇠
+### 신호 감쇄
 
 무선 링크의 특징 중에서 어느 순간부터 급격하게 감쇄한다는 점이 있습니다.
 
