@@ -87,3 +87,124 @@ Array.of(1,2,3,4,5)
 ### 비동기 프로그래밍
 
 - 컴퓨터의 처리가 발전하면서 다양한 비동기 작업들이 많아지면서 전통적인 명령형 방식은 콜백 지옥이나 상태관리의 복잡성으로 문제가 생겨 이를 해결하고자 반응형 프로그래밍이 나왔다고 합니다. 데이터 스트림과 연산자 체인을 통해 비동기 프로세스를 관리할 수 있습니다.
+
+## ReactiveX
+
+- ReactiveX(Rx, Reactive Extensions)는 마이크로소프트에서 반응형 프로그래밍을 구현하기 위해 만든 라이브러리 집합으로 2011년에 공개된 오픈소스 프로젝트이다. 그만큼 역사와 전통을 가지고 있는... 라이브러리라고 할 수 있다. RxSwift의 경우 2015년에 첫번째 Release Note를 확인하실 수 있습니다.
+- [ReactiveX 홈페이지](https://reactivex.io/)를 살펴보면 어떠한 철학을 가지고 있고, 어떠한 특성이 있는지 확인해보실 수 있습니다.
+
+<img width="800" src="https://github.com/user-attachments/assets/5a50f928-9851-44a6-bdfb-9ca55299fdba">
+
+- 함수형, 코드의 간결성, 효과적인 에러 핸들링, 동시성 프로그래밍에 효과적이라고 합니다.
+
+<img width="800" src="https://github.com/user-attachments/assets/b33fca19-1485-4e7e-bf19-ebb64601eb96">
+
+- ReactiveX는 Observable 시퀀스를 사용하여 비동기 및 이벤트 기반 프로그램을 구성하는 라이브러리라고 소개되어 있습니다. 여기서 주의깊게 봐야할 키워드는 observable sequence, Asynchronous, event-based 입니다.
+
+## 간단한 실습?
+
+- ReactiveX는 RxSwift를 통해 Swift를 지원하는데요.
+- 아래와 같이 검색을 하게 되면 검색 버튼을 눌렀을 때 뿐만이 아니라 텍스트의 변화에 따라 자동으로 검색을 해주는 앱을 만든다고 생각해봅시다.
+
+<img width="250" src="https://github.com/user-attachments/assets/a0ec7fd7-be5a-427d-8d66-28d44f8bb947">
+
+- 어떤 방법이 떠오르시나요? `UISearchBarDelegate`를 사용해서 텍스트가 `textDidChange` 일때... 데이터를 받아서 어쩌구 저쩌구...
+- 이 방법을 RxSwift와 Combine은 너무 쉽게 구현이 가능합니다.
+
+### RxSwift
+
+- 아래의 방식으로 내부적으로 searchBar.rx 의 뒤에 여러가지를 붙일 수 있게 구현된 것 같습니다. 
+
+```swift
+        /// 텍스트의 변경시 이벤트
+        let searchBarText = searchController.searchBar.rx.text.orEmpty
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+
+        /// 검색 버튼 클릭시 이벤트
+        let searchButtonClick = searchController.searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchController.searchBar.rx.text.orEmpty)
+
+        /// 두 이벤트를 합침
+        Observable.merge(searchBarText, searchButtonClick)
+            .distinctUntilChanged()
+            .flatMapLatest(fetchBooks)
+            .observe(on: MainScheduler.instance)
+            .bind(to: searchResultsController.searchResultsRelay)
+            .disposed(by: disposeBag)
+```
+
+이렇게 bind를 해준다면 이 데이터를 받는 곳에서는 아래와 같이 값이 변경된다면 reloadData를 해주는 방식으로 구현할 수 있습니다.
+
+```swift
+        /// 값이 변경되면 reloadData()
+        searchResultsRelay
+            .bind { [weak self] _ in self?.tableView.reloadData() }
+            .disposed(by: disposeBag)
+```
+
+### Combine
+
+이 방식이 똑같이 Combine으로는 어떻게 구현될까요? 진짜 비슷한 것 같습니다. 차이를 보자면 Scheduler, DisposeBag 정도...? bind가 sink로 바뀐 정도?
+
+```swift
+        searchTextSubject
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .flatMap { self.fetchBooks(query: $0) }
+            .receive(on: DispatchQueue.main)
+            .sink { self.searchResultsController.searchResultsSubject.send($0) }
+            .store(in: &cancellables)
+
+extension SearchTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchTextSubject.send(searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        searchTextSubject.send(searchText)
+    }
+}
+```
+
+받는 곳에서는 아래와 같이 됩니다.
+
+```swift
+        searchResultsSubject
+            .receive(on: DispatchQueue.main)
+            .sink { _ in self.tableView.reloadData() }
+            .store(in: &cancellables)
+```
+
+## 써보고 난뒤...
+
+- 솔직히 써보고 난 뒤 차이점을 솔직히 잘... 설명할 수 없을 것 같습니다. 차이점을 설명하기에는 너무나도 저의 경험치가 낮습니다.
+- 아무래도 알고 쓴다면 RxSwift에서 조금더 편리(?)하게 사용할 수 있을 것 같다는 느낌이 듭니다. SearchBar의 경우 delegate를 해줄필요 없이 그 역할도 해준다는 느낌이 들었고, 많은 기간동안 이러한 것들이 많이 발달되어 있을 것 같습니다.
+- 코드스쿼드에서 박보영 님이 발표하신 것이 있는데... [RxSwift to Combine(박보영)](https://www.youtube.com/watch?v=Y273NDkYBg4)
+
+### 차이
+
+|Combine|RxSwift|
+|--|--|
+|Publishers/Subscribers|Observable/Observer|
+|Cancellable|Disposable|
+|PassthroughSubject|PublishSubject|
+|x|ReplaySubject|
+|CurrentValueSubject|BehaviorSubject|
+
+- `Publisher`의 경우 `AnyPublisher<String, Error>`로 되어있지만 `Observable<String>`으로 되어있어 `Result<Sting, Error>`로 넣어줘야 한다고 합니다.
+- `RxSwift`의 경우 `rx.viewWillAppear`처럼 이벤트를 관리할때 편하게 다양한 방법들이 지원됩니다.
+
+### 속도
+
+- 퍼포먼스 면에서는 Combine이 역시 First Party의 위엄을 보여줍니다... 물론 아래글들은 2019년 글들입니다.
+- [미디엄 블로그 글](https://medium.com/@M0rtyMerr/will-combine-kill-rxswift-64780a150d89)
+
+|속도|용량|
+|--|--|
+|<img src="https://github.com/user-attachments/assets/6ce0ceac-ef6b-463a-9534-3d17cb97677b" />|<img src="https://github.com/user-attachments/assets/9f3d9fa0-3c40-4a65-a7c4-3142762313e6" />|
+
+- [외국 사이트 아티클](https://quickbirdstudios.com/blog/combine-vs-rxswift/)
+- [퍼포먼스 비교 레포](https://github.com/QuickBirdEng/CombineRxSwiftPerformance)
+
+<img width="860" src="https://github.com/user-attachments/assets/debaf507-9649-4194-b5be-4053ccd8df94" />
