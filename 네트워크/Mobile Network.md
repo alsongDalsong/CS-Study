@@ -167,6 +167,8 @@ C한테는 이 신호가 잡음처럼 들리는 그런 경우가 됩니다.
 
 CSMA와 CSMA/CD는 무선환경에서 적용하기 어렵습니다. 그래서 CSMA/CA라는 기술이 나오게 되었습니다.
 
+[출처](https://junghyun100.github.io/CSMA_CA/)
+
 ## CSMA/CA
 
 ![image](https://github.com/user-attachments/assets/ef62e5e3-7a25-42b2-96eb-a6e97820767e)
