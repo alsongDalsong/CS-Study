@@ -67,3 +67,47 @@ extension UIViewController {
 
 ## Swift 언어의 특징
 
+- 만약 누가 Swift의 특징이 뭐야? 라고 물어보신다면 뭐라고 답하실건가요?
+- 저의 경우 가장 먼저 생각나는 특징은 Swift로 코드를 작성하면 `macOS`, `iOS`, `iPadOS`, `watchOS`, `Widget` 등 애플 기기에서 사용할 수 있는 앱을 만들 수 있다는 점을 가장 먼저 생각할 것 같습니다.
+- 하지만 우리는 개발자니까... 언어 자체의 특징에 대해서도 알아봐야 겠죠...?
+
+- [공식 홈페이지](https://developer.apple.com/kr/swift/)에서는 이렇게 소개하고 있습니다!
+
+<img width="800" src="https://github.com/user-attachments/assets/3ed7a706-be3a-4aaf-948b-f2a2e8241aeb" />
+
+- [swift.org](https://www.swift.org/)에서 볼 수 있는 키워드는 `fast`, `modern`, `safe`, `joy`라는 단어가 눈에 띕니다.
+
+<img width="800" src="https://github.com/user-attachments/assets/aaf3d8ed-c844-4d56-9b20-524887ef3d3a" />
+
+### Fast
+
+- LLVM(Low Level Virtual Machine) 기반의 고성능 컴파일러를 사용하여 정적 타입 언어의 특징을 가지고 있어 컴파일 시점에 많은 최적화가 적용된다고 합니다.
+- ARC를 활용하여 수동으로 메모리 관리를 할 필요 없습니다. GC 기반 언어보다 오버헤드가 적다고 하구요.
+- struct가 Stack에 저장되어 Heap보다 빠르게 접근가능하고, COW 기법을 활용하여 불필요한 복사를 최소화 한다고 합니다.
+
+### Modern
+
+- 위키피디아에서 확인할 수 있듯이 다양한 프로그래밍 패러다임을 구현할 수 있다는 장점이 있습니다.
+- 특히 SwiftUI에서는 선언적 프로그래밍, 전체적으로 프로토콜 지향 프로그래밍 패러다임을 따를 수 있습니다.
+- async/await, actor 등 동기적 프로그래밍에서 중요한 이슈인 Mutable Shared State 관리를 효율적으로 가능하게 합니다.
+
+### Safe
+
+- Swift는 컴파일 단계에서 타입을 확정시키기 때문에 타입에 정말 엄격합니다. 이로 인해 런타임 단계에서 발생할 수 있는 오류를 방지할 수 있습니다. 또한 타입 추론을 통해 쉽게 변수를 선언할 수 있게 합니다.
+- ARC 메모리 관리로 개발자가 메모리 관리를 해줄 필요가 없는 것도 안정성에 들어갈 수 있겠지만 이의 경우 unowned, weak를 잘 사용하여 구할 수 있어야 하겠습니다.
+
+### Joy
+
+<img width="300" src="https://github.com/user-attachments/assets/a87d5185-4ce8-489d-bcc9-53d12a2918bc" />
+
+- 즐거우신가요?
+- 아래처럼 문장을 작성하듯 코드를 작성할 수 있다는 점은 정말 큰 매력으로 생각됩니다. (개인적)
+- 세미콜론 생략, Playground를 통한 코딩, WWDC에서의 공식 강의, 공식 홈페이지에서 다양한 코드 샘플 등 확실히 개발자가 편하고 즐겁게(?) 코딩할 수 있도록 많은 노력을 하고 있는 것 같습니다.
+
+```swift
+func greet(to name: String) {
+    print("Hello, \(name)!")
+}
+
+greet(to: "Swift")
+```
