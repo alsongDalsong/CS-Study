@@ -1,7 +1,3 @@
-- [오류 제어(Error Control)](#오류-제어error-control)
-- [흐름 제어(Flow Control)](#흐름-제어flow-control)
-- [혼잡 제어(Congestion Control)](#혼잡-제어congestion-control)
- 
 ## 오류 · 흐름 · 혼잡 제어 왜 필요했을까?
 
 일반적으로 신뢰성이 보장된 통신을 위해 TCP를 사용한다. TCP가 신뢰성있는 통신을 가능하게 해주는 기능이 **오류 · 흐름 · 혼잡 제어**이다.
