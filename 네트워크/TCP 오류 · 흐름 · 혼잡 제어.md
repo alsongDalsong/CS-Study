@@ -2,6 +2,7 @@
 - [흐름 제어(Flow Control)](#흐름-제어flow-control)
 - [혼잡 제어(Congestion Control)](#혼잡-제어congestion-control)
  
+## 오류 · 흐름 · 혼잡 제어 왜 필요할까?
 
 
 ## 오류 제어(**Error Control**)
