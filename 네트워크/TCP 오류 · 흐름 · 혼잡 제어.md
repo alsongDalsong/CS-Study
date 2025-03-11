@@ -1,8 +1,16 @@
+- [오류 제어(Error Control)](#오류-제어error-control)
+- [흐름 제어(Flow Control)](#흐름-제어flow-control)
+- [혼잡 제어(Congestion Control)](#혼잡-제어congestion-control)
+ 
+
+
 ## 오류 제어(**Error Control**)
 
 TCP는 잘못된 세그먼트를 재전송해 신뢰성을 보장한다. TCP가 잘못된 세그먼트를 다음과 같은 방법을 통해 감지한다.
 
 ### 중복된 ACK 세그먼트를 수신했을 때
+
+<img width=300 src="https://github.com/user-attachments/assets/f60b36a5-26ef-4857-8a14-dff2578c7136">
 
 > 출처: [https://velog.io/@jjjoina/네트워크-전송-계층](https://velog.io/@jjjoina/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%A0%84%EC%86%A1-%EA%B3%84%EC%B8%B5)
 
@@ -23,19 +31,19 @@ ARQ는 세 가지 방식이 존재하는데
     - 단순하면서 높은 신뢰성을 보장한다는 장점이 있음
     - 하나의 세그먼트를 전송할 때 마다 ACK를 수신 받아야하기 때문에 네트워크 이용 효율 및 성능 저하 문제가 있음
 - Go-Back-N ARQ
+  
+    <img width=400 src="https://github.com/user-attachments/assets/8ae4d718-06ff-45bc-bb6f-77b9df1b8b1f">
     
-    ![출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html](attachment:b4c13c4c-6ad2-43f5-a80a-25ad004dc2fa:image.png)
-    
-    출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html
+    > 출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html
     
     - 연속해서 세그먼트를 전송하는 **파이프라이닝(pipelining) 기술**을 사용해 여러 세그먼트를 한번에 전송
     - 만약 0,1,2,3,4 세그먼트를 동시에 전송 중에 2번 세그먼트가 문제가 발생한 경우 3,4 번이 정상적으로 도착했더라도 이를 폐기 후 2,3,4 세그먼트를 재전송한다.
     - 한번에 여러 세그먼트를 보낼 수 있어 네트워크 효율과 성능이 Stop-And-Wait ARQ 보다 높지만, 세그먼트에 오류 발생 시 이후 세그먼트를 모두 전송해야한다는 단점이 있음
 - Selective Repeat ARQ
-    
-    ![출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html](attachment:9f45224a-0bfd-4cbd-ad0f-aa2c9fda8848:image.png)
-    
-    출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html
+  
+    <img width=400 src="https://github.com/user-attachments/assets/ca6a0c12-5858-4598-804c-f75cdfb3fc61">
+  
+    > 출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html
     
     - Go-Back-N ARQ와 동일하게 파이프라이닝 기술을 사용해 연속적으로 세그먼트 전송 가능
     - Selective Repeat ARQ는 Go-Back-N ARQ 단점을 보안한 ARQ 방식
@@ -49,24 +57,17 @@ ARQ는 세 가지 방식이 존재하는데
 
 수신 호스트는 **수신 버퍼**를 통해 수신된 세그먼트를 프로세스에 의해 처리되기 전에 임시로 저장한다. 즉, 수신 버퍼가 수용할 수 있는 크기보다 더 많은 데이터가 한번에 전송되면 손실 발생 가능성이 커진다. 이를 `버퍼 오버플로`라고 한다. 
 
-<aside>
-☝
-
-수신 버퍼가 존재하는 것 처럼 송신할 세그먼트를 임시 저장하는 **송신 버퍼**도 존재한다.
-
-</aside>
+> [!NOTE]
+> ☝ 수신 버퍼가 존재하는 것 처럼 송신할 세그먼트를 임시 저장하는 **송신 버퍼**도 존재한다.
 
 **흐름 제어**란, 송신 호스트가 수신 호스트의 처리 속도를 고려해 송수신 속도(한 번에 전송할 세그먼트의 수)를 적절하게 조절하는 것을 의미한다.
 
-<aside>
-📌
-
-**정리**
-
-- 파이프라이닝 기반으로 동작하는 ARQ는 수신 호스트의 처리 속도에 의해 무한한 데이터를 연속해서 전송할 수 없다.
-- 때문에 송신 속도 즉, 한 번에 전송할 세그먼트 수를 흐름 제어를 통해 조절한다.
-- 수신 호스트가 처리 가능한 세그먼트 수를 초과해 데이터가 손실되는 것을 `버퍼 오버플로라`고 한다.
-</aside>
+> [!NOTE]
+> 📌 **정리**
+>
+> - 파이프라이닝 기반으로 동작하는 ARQ는 수신 호스트의 처리 속도에 의해 무한한 데이터를 연속해서 전송할 수 없다.
+> - 때문에 송신 속도 즉, 한 번에 전송할 세그먼트 수를 흐름 제어를 통해 조절한다.
+> - 수신 호스트가 처리 가능한 세그먼트 수를 초과해 데이터가 손실되는 것을 `버퍼 오버플로라`고 한다.
 
 현대에서 흐름 제어를 위해 슬라이딩 윈도우를 사용한다.
 
@@ -74,9 +75,9 @@ ARQ는 세 가지 방식이 존재하는데
 
 윈도우란, 송신 호스트가 한번에 송신할 수 있는 세그먼트의 최대량(혹은 크기)을 의미한다. 즉, 윈도우 크기만큼의 세그먼트는 확인 응답을 받지 않고도 한 번에 전송 가능하다는 뜻이 된다.
 
-![출처: https://sw-test.tistory.com/18](attachment:a7405456-1258-4d3b-ac0c-e7fb37ca44cf:image.png)
+<img width=600 src="https://github.com/user-attachments/assets/1b9f7305-1a44-43a0-9163-81cad92e5d7d">
 
-출처: https://sw-test.tistory.com/18
+> 출처: https://sw-test.tistory.com/18
 
 윈도우가 세그먼트가 전송 후 그에 대한 ACK를 받으면, 윈도우는 한칸씩 앞으로 이동하면서, 다음 세그먼트가 전송될 수 있도록 한다. 이처럼 미끄러지듯 움직인다고해서 `슬라이딩 윈도우`이다.
 
@@ -99,22 +100,18 @@ ARQ는 세 가지 방식이 존재하는데
 
 AIMD는 뜻 그대로 “합으로 증가 곱으로 감소”의미 이다. 즉, 혼잡이 감지되지 않을 경우 윈도우의 사이즈를 RTT 마다 1씩 선형적으로 증가시키고, 혼잡이 감지되면 윈도우 사이즈를 절반으로 감소시키는 동작을 반복하는 알고리즘이다.
 
-![image.png](attachment:1655b16c-6daf-4867-8d5a-884d9ecce0e3:image.png)
+<img width=400 src="https://github.com/user-attachments/assets/0e64ffa0-bb26-4487-a987-1f22e2ef15d8">
 
-<aside>
-☝
-
-**RTT(Round Trip Time)**란,
-
-RTT(Round Trip Time)이 사용된다. RTT는 데이터를 전송한 후, 그에 대한 응답(ACK)을 받을 때 까지 걸리는 시간을 의미한다.
-
-</aside>
+> [!NOTE]
+> ☝ **RTT(Round Trip Time)**란,
+>
+> RTT(Round Trip Time)이 사용된다. RTT는 데이터를 전송한 후, 그에 대한 응답(ACK)을 받을 때 까지 걸리는 시간을 의미한다.
 
 두 번째는 Show Start 알고리즘이 있다. **Show Start**는 윈도우의 크기를 1로 시작해 수신받은 ACK 세그먼트 하나당 1씩 증가시킨다.
 
-![출처: https://ys-cs17.tistory.com/70](attachment:ed59c271-61e6-424d-a2c3-8a6190304a1e:image.png)
+<img width=400 src="https://github.com/user-attachments/assets/8a92bd8f-9280-42b9-b55d-9fac0f6af6b9">
 
-출처: https://ys-cs17.tistory.com/70
+> 출처: https://ys-cs17.tistory.com/70
 
 즉, 결과적으로 2배씩 지수의 형태로 증가하게 된다. Show Start는 AIMD보다 초기에 빠르게 윈도우 크기를 증가시켜 원활한 통신이 가능하게 해준다.
 
@@ -129,29 +126,21 @@ Show Start 중 세번의 중복 ACK가 발생하거나 타임아웃이 발생하
     1. 윈도우 사이즈를 1로 ssthresh를 감지 시점의 절반으로 조정
     2. 다시 Show Start(원도우 사이즈를 지수형태로 증가) 수행
 
-![image.png](attachment:04f83db5-7869-4c29-b7d4-87c9784d720c:image.png)
+<img width=600 src="https://github.com/user-attachments/assets/aab9a65e-9c7b-48dd-8118-1598df4324eb">
 
-<aside>
-🤔
+> [!NOTE]
+> 🤔 **왜 3 ACK Duplicated와 타임아웃에 따라 다른 알고리즘을 수행할까?** 
+>
+> 3 ACK Duplicated는 어떻게 보면 3번의 ACK를 수신 받았음과 동일하다. 즉, 혼잡 상황보다는 단순 패킷 손실 가능성이 크기 때문에 원도우 크기를 1로 감소시키는 것이 아닌 Fast Recovery 알고리즘을 사용해 빠르게 원도우를 회복시킨다.
+>
+> 하지만, 타임아웃의 경우 혼잡 상황일 가능성이 더 크기 때문에 원도우 사이즈를 초기화하는 것이다.
+>
+> 이 처럼 둘을 구분해서 처리하는 것을 `TCP Reno` 방식이라고 하며, 둘을 구분하지 않고, 동일하게 타임아웃 상황처럼 처리하는 것을 `TCP Tahoe` 방식이라고 한다.
 
-**왜 3 ACK Duplicated와 타임아웃에 따라 다른 알고리즘을 수행할까?** 
-
-3 ACK Duplicated는 어떻게 보면 3번의 ACK를 수신 받았음과 동일하다. 즉, 혼잡 상황보다는 단순 패킷 손실 가능성이 크기 때문에 원도우 크기를 1로 감소시키는 것이 아닌 Fast Recovery 알고리즘을 사용해 빠르게 원도우를 회복시킨다.
-
-하지만, 타임아웃의 경우 혼잡 상황일 가능성이 더 크기 때문에 원도우 사이즈를 초기화하는 것이다.
-
-이 처럼 둘을 구분해서 처리하는 것을 `TCP Reno` 방식이라고 하며, 둘을 구분하지 않고, 동일하게 타임아웃 상황처럼 처리하는 것을 `TCP Tahoe` 방식이라고 한다.
-
-</aside>
-
-<aside>
-☝
-
-빠른 재전송(fast retransmit)란,
-
-빠른 재전송은 타임아웃 전이라도 세 번의 동일한 ACK 세그먼트(3 ACK Duplicated)가 수신 되었을 때 오류라고 인지하고, 해당 세그먼트를 곧바로 재전송하는 것이다.
-
-</aside>
+> [!NOTE]
+> ☝ 빠른 재전송(fast retransmit)란,
+>
+> 빠른 재전송은 타임아웃 전이라도 세 번의 동일한 ACK 세그먼트(3 ACK Duplicated)가 수신 되었을 때 오류라고 인지하고, 해당 세그먼트를 곧바로 재전송하는 것이다.
 
 하지만, 현대에는 앞써 설명한 알고리즘은 사실 1980년대에 개발되어 현재와는 대역폭의 차이가 크다. 즉, 대역폭이 커짐에 따라 더 빠르게 Window 사이즈를 조절하는 알고리즘이 계속적으로 등장하고 있다.
 
