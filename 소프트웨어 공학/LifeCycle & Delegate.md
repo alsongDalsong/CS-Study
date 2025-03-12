@@ -58,6 +58,15 @@ UIApplication 객체는 앱이 실행될 때 Main RunLoop를 실행하고, 이�
 
 SwiftUI를 사용하더라도 여전히 iOS의 핵심 구조는 UIKit 기반입니다. 따라서 SwiftUI 앱도 내부적으로는 UIKit의 UIApplication을 기반으로 동작합니다. Main RunLoop 및 이벤트 처리 시스템은 여전히 UIKit 기반입니다. 또한, 생명주기, 시스템 이벤트 등은 여전히 UIKit의 구조 위에서 동작합니다.
 
+### UIKit과 SwiftUI 이벤트 처리 차이
+|구분|UIKit|SwiftUI|
+|--|--|--|
+|이벤트 처리 방식|Responder Chain (UIResponder)|Gesture Recognizer 기반|
+|개발자 접근 방식|터치 이벤트 메서드 (touchesBegan, touchesEnded) 오버라이드|SwiftUI 내장 제스처(.onTapGesture, .gesture) 사용|
+|세부 제어 가능성|상세한 터치 이벤트 제어 가능|간결한 코드로 제공된 제스처를 사용하여 처리|
+
+SwiftUI는 UIKit과 달리 직접적으로 터치 이벤트 메서드를 오버라이드하지 않고 제스처로 처리하는 방식을 선호합니다.
+
 ```swift
 
 - 명시적으로 `AppDelegate`나 `SceneDelegate`가 필요하지 않지만, 여전히 사용 가능합니다(하이브리드 방식).
