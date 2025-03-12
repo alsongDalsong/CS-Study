@@ -51,6 +51,48 @@ UIApplication 객체는 앱이 실행될 때 Main RunLoop를 실행하고, 이�
 
 ![image](https://github.com/user-attachments/assets/18542504-4f5d-48a1-adf3-1a62483f2c63)
 
+- SwiftUI의 생명주기 메서드:
+  - `.onAppear()`
+  - `.onDisappear()`
+  - `.onChange(of:)`
+
+SwiftUI를 사용하더라도 여전히 iOS의 핵심 구조는 UIKit 기반입니다. 따라서 SwiftUI 앱도 내부적으로는 UIKit의 UIApplication을 기반으로 동작합니다. Main RunLoop 및 이벤트 처리 시스템은 여전히 UIKit 기반입니다. 또한, 생명주기, 시스템 이벤트 등은 여전히 UIKit의 구조 위에서 동작합니다.
+
+```swift
+
+- 명시적으로 `AppDelegate`나 `SceneDelegate`가 필요하지 않지만, 여전히 사용 가능합니다(하이브리드 방식).
+
+---
+
+### 🚩 **SwiftUI 앱에서 UIApplication을 사용하는 법 (옵션)**
+
+SwiftUI에서 UIKit 기능(예: 앱 상태 감지, 키보드 제어 등)을 사용하려면 다음과 같은 방법을 통해 UIApplication 객체에 접근할 수 있습니다.
+
+```swift
+import SwiftUI
+
+@main
+struct MyApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+// AppDelegate 활용 예시
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // UIKit 기반 초기화 코드
+        return true
+    }
+}
+
+```
+
 ## App Delegate
 ### iOS 12 and earlier
 - 역할: 앱의 전반적인 동작을 관리하며, 앱의 생명주기 이벤트와 시스템 이벤트를 처리합니다. (iOS 13 이전)
