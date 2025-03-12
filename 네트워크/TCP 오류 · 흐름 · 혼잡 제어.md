@@ -48,7 +48,7 @@ ARQ는 세 가지 방식이 존재하는데
     > 출처: https://techdifferences.com/difference-between-go-back-n-and-selective-repeat-protocol.html
     
     - Go-Back-N ARQ와 동일하게 파이프라이닝 기술을 사용해 연속적으로 세그먼트 전송 가능
-    - Selective Repeat ARQ는 Go-Back-N ARQ 단점을 보안한 ARQ 방식
+    - Selective Repeat ARQ는 버퍼를 사용해 Go-Back-N ARQ 단점을 보안한 ARQ 방식
     - 문제가 발생한 세그먼트만 재전송
     - 현대에 가장 널리 사용되는 ARQ 하지만, 만약 두 호스트 중 한 호스트라도 Selective Repeat ARQ를 지원하지 않을 시 Go-Back-N ARQ으로 동작
     - Selective Repeat ARQ의 지원 여부는 세그먼트 옵션 필드에 속한 SACK(Selective Acknowledgment) 필드를 통해 알 수 있다.
