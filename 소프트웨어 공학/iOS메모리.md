@@ -20,7 +20,7 @@
 
 ## 메모리 페이지란?
 
-> [시원님이 정리해 주신 메모리 관련 내용을 보면 더 잘 이해할 수 있습니다!]()
+> [시원님이 정리해 주신 메모리 관련 내용을 보면 더 잘 이해할 수 있습니다!](https://github.com/alsongDalsong/CS-Study/blob/main/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/%EA%B0%80%EC%83%81%EB%A9%94%EB%AA%A8%EB%A6%AC.md)
 > 
 
 페이징 기법을 사용하는 운영체제는 메모리를 페이지 단위로 관리합니다.
@@ -102,9 +102,10 @@ arr[19999] = 64
 
 앞에서 본 메모리 매핑 파일입니다.
 
-![7](https://github.com/user-attachments/assets/ddd1c98f-d285-4ade-88e0-5840d1c1ae06)
+| 1 | 2 |
+| -- | -- |
+| ![7](https://github.com/user-attachments/assets/ddd1c98f-d285-4ade-88e0-5840d1c1ae06) | ![8](https://github.com/user-attachments/assets/9e22bb4f-1fca-46b5-8137-ccccdfaba5e2) |
 
-![8](https://github.com/user-attachments/assets/9e22bb4f-1fca-46b5-8137-ccccdfaba5e2)
 
 또 다른 예시로는 이미지파일, 데이터 Blobs파일, 트레이닝 모델, 프레임워크 등이 있을 수가 있습니다.
 
