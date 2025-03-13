@@ -422,3 +422,5 @@ ImageIO를 사용하면 스트리밍 API를 활용하여 이미지를 다운샘�
 1. 뷰컨트롤러 라이프 사이클 활용
 
 이건 위와 비슷하니 생략하겠습니다!
+
+출처: https://developer.apple.com/videos/play/wwdc2018/416/
