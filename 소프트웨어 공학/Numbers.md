@@ -148,7 +148,7 @@ S Exponent Fraction/Mantissa (23비트)
 0 | 10000001 | 01101000000000000000000
 ```
 
-실제로 
+실제로 Swift 코드로 Float을 비트로 확인이 가능합니다.
 
 ```swift
 let n: Float = 5.625
@@ -156,3 +156,18 @@ let bitPattern = n.bitPattern
 print(String(bitPattern, radix: 2)) // 10000001 01101000000000000000000 (0은 생략 된 모습, 띄어쓰기는 가독성을 위하여 넣었습니다)
 ```
 
+#### 잠깐! Bias???
+
+8비트는 -128 ~ 127까지의 수를 나타낼 수 있다고 위에서 알아보았습니다. 이것을 모두 양수로 표현하고자 127을 더했습니다. 앗 그런데 128을 더하지 않은 이유는 뭘까요?
+결국 0 ~ 255까지 나타낼 수 있다는 말인데요, 여기서 0과 255는 특수한 경우를 나타내어 1 ~ 244까지를 지수부분으로 사용한다고 합니다.
+
+0의 경우 숫자 0을 나타냅니다. 
+
+Swift로 Float의 최대 최소를 확인해 볼 수 있습니다.
+
+```
+print(Float.greatestFiniteMagnitude)   // 3.4028235e+38
+print(Float.leastNormalMagnitude)      // 1.1754944e-38
+print(Float.leastNonzeroMagnitude)     // 1e-45
+print(Float.zero)                      // 0.0
+```
