@@ -1,8 +1,13 @@
-# Core Data
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/2fce64ac-c9c9-4e55-806f-b246142bd1af">
+    <img src="https://github.com/user-attachments/assets/ce44fc1b-6fce-4523-ac70-94013ca5e274">
+</p>
 
-<img width=100% src="https://github.com/user-attachments/assets/5ae38818-fc07-4ab6-abb5-af033d7aa4c7">
+# Core Data 
 
 Core Data는 최상위 객체로 Container가 있으며, Container는 Model, Context, Coordinator를 생성 및 관리한다.
+
+<img width=100% src="https://github.com/user-attachments/assets/5ae38818-fc07-4ab6-abb5-af033d7aa4c7">
 
 ## Model
 
