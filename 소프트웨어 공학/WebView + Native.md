@@ -90,7 +90,7 @@
 - 네이티브 앱에 비해 상대적으로 구동 속도가 느리고 안정성도 떨어집니다.
 
 
-## Hybrid Web App
+## Hybrid App
 하이브리드 앱은 네이티브 앱과 웹 앱의 방식을 모두 사용합니다. 앱의 화면이나 기능 등 콘텐츠 영역은 웹 기반으로 제작하되 겉모습은 앱 마켓 등록과 설치를 위해 네이티브 앱으로 포장합니다. 두 가지 개발 방식을 모두 이용하므로 웹과 앱의 API를 모두 사용할 수 있습니다. 따라서, 웹 앱에서는 불가능했던 디바이스 자체 기능에 접근할 수 있습니다.
 
 ![image](https://github.com/user-attachments/assets/672a4840-07fa-4953-9abd-06fda824fdb1)
@@ -106,7 +106,7 @@
 - 네이티브 앱에 비해 디자인의 자유도가 떨어집니다.
 
 
-## Native & Hybrid Web App
+## Native & Hybrid App
 React Native, Flutter, XAMARIN, NativeScript 등 하이브리드 앱을 만드는 프레임워크는 많습니다.
 
 ![image](https://github.com/user-attachments/assets/c95bd46f-72a2-41ec-ac12-57ec2ad65c82)
