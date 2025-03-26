@@ -109,7 +109,7 @@ Sector 안으로 들어가볼까요? 실제로 데이터를 쓰고 읽는 과정
 
 ### SSTF (Shortest Seek Time First)
 
-받은 큐에서 가장 짧은곳을 우선적으로 가는 방법은 어떨까요? 여기서 생각해볼까요? 큐가 주어진다고 가정했을 때 이것보다 빠른 방법이 있을까요?
+그래서 나왔습니다. 가장 효율적인 방법! 가장 짧은곳을 우선적으로 가는 방법은 어떨까요? 여기서 생각해볼까요? 큐가 주어진다고 가정했을 때 이것보다 빠른 방법이 있을까요?
 
 <img width="500" src="https://github.com/user-attachments/assets/2d2a49dd-7709-433d-8b08-838eda3f568c" />
 
@@ -121,7 +121,25 @@ Sector 안으로 들어가볼까요? 실제로 데이터를 쓰고 읽는 과정
 
 <img width="500" src="https://github.com/user-attachments/assets/4843fc99-81b7-4f19-a744-088a699cd798" />
 
-이것도 살짝~ 문제가 있습니다. 뭘까요?
+이것도 살짝~ 문제가 있습니다. 뭘까요? 이제 Header는 큐를 신경안쓰고 그냥 왔다갔다 하고 있었다고 생각해봅시다. 아래와 같이 돌아오는 길에 9를 지나갔는데 [9, 3, 4]가 추가되었다면?
 
+<img width="500" src="https://github.com/user-attachments/assets/8cdd3194-a749-4340-bf9d-bbfc752a4060" />
 
+`3, 4`는 문제가 없습니다. `9`의 경우 다시 돌아올 때까지 꽤 긴 시간을 기다려야 할 수 있네요. 눈앞에서 배차간격 긴 버스 놓쳤다고 생각해보세요... 심지어 다음버스가 없어요. 그러면 그 버스 다 돌아올때까지 기다려야 하는데 이게 그 문제입니다.
 
+<img width="500" src="https://github.com/user-attachments/assets/7f06c228-110e-404d-882f-bf8c91c1e32c" />
+
+### C-SCAN (Circular)
+
+그래서 나왔습니다. 한쪽으로만 갑니다. 만약에 끝까지 갔다면 돌아오는길에 처리하는게 아니고 쭉 다시 돌아와서 처음부터 다시 시작합니다.
+
+<img width="500" src="https://github.com/user-attachments/assets/5327845e-1c62-4b73-bddb-642f5b52d805" />
+
+### LOOK, C-LOOK
+
+여기서 만족하지 않았어요. 최대 최소까지만 이동하는 LOOK, C-SCAN과 유사하게 C-LOOK이라는 방법도 있습니다.
+
+<img width="500" src="https://github.com/user-attachments/assets/d7e368a8-14ef-4744-9d5a-ad7b608589d1" />
+<img width="500" src="https://github.com/user-attachments/assets/86a6cc1f-3d02-4a01-9e65-ba05220eb751" />
+
+### 끝...! 고생하셨습니다!
