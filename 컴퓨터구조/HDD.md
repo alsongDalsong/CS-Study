@@ -111,7 +111,7 @@ Sector 안으로 들어가볼까요? 실제로 데이터를 쓰고 읽는 과정
 
 그래서 나왔습니다. 가장 효율적인 방법! 가장 짧은곳을 우선적으로 가는 방법은 어떨까요? 여기서 생각해볼까요? 큐가 주어진다고 가정했을 때 이것보다 빠른 방법이 있을까요?
 
-<img width="500" src="https://github.com/user-attachments/assets/2d2a49dd-7709-433d-8b08-838eda3f568c" />
+<img width="500" src="https://github.com/user-attachments/assets/777029f4-6b83-4d1a-abb0-66b1535141af" />
 
 없겠죠 왜냐하면 가장짧은 이동거리를 이동하는게 목표인데 이거보다 이동거리가 더 짧게 나올수가 없겠죠? 하지만 여기서 문제가 있습니다. 만약에 큐가 계속해서 큰숫자 근처로 들어온다면 작은 숫자는 기약없이 기다려야 합니다. 바로 Starvation 문제가 발생합니다.
 
@@ -123,11 +123,11 @@ Sector 안으로 들어가볼까요? 실제로 데이터를 쓰고 읽는 과정
 
 이것도 살짝~ 문제가 있습니다. 뭘까요? 이제 Header는 큐를 신경안쓰고 그냥 왔다갔다 하고 있었다고 생각해봅시다. 아래와 같이 돌아오는 길에 9를 지나갔는데 [9, 3, 4]가 추가되었다면?
 
-<img width="500" src="https://github.com/user-attachments/assets/8cdd3194-a749-4340-bf9d-bbfc752a4060" />
+<img width="500" src="https://github.com/user-attachments/assets/c8a24e48-28db-4068-ade1-64741d0f75c8" />
 
 `3, 4`는 문제가 없습니다. `9`의 경우 다시 돌아올 때까지 꽤 긴 시간을 기다려야 할 수 있네요. 눈앞에서 배차간격 긴 버스 놓쳤다고 생각해보세요... 심지어 다음버스가 없어요. 그러면 그 버스 다 돌아올때까지 기다려야 하는데 이게 그 문제입니다.
 
-<img width="500" src="https://github.com/user-attachments/assets/7f06c228-110e-404d-882f-bf8c91c1e32c" />
+<img width="500" src="https://github.com/user-attachments/assets/b4774b26-fd20-4c31-86c2-ef3c35925ec8" />
 
 ### C-SCAN (Circular)
 
